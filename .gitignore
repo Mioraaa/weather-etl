@@ -1,0 +1,7 @@
+logs/dags_processor_manager
+config/config.conf
+plugins/
+dags/__pycache__/
+.env
+.idea/
+.venv/
