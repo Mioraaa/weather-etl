@@ -3,6 +3,11 @@
 import os
 import configparser
 
+from logging_conf import setup_logging
+
+
+logger = setup_logging()
+
 conf = configparser.ConfigParser()
 conf.read(os.path.join(os.path.dirname(__file__), "../config/aws_conf.config"))
 
