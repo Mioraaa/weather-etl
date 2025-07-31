@@ -1,9 +1,12 @@
+
+
 import s3fs
 from utlis.constants import logger, AWS_ACCESS_KEY, AWS_SECRET_ACCESS_KEY, AWS_REGION
 
 
 class BucketOperation:  
-    def connect_to_s3():
+    
+    def connect_to_s3(self):
         try:
             s3 = s3fs.S3FileSystem(
                 anon=False,
