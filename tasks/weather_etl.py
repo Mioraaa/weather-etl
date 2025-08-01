@@ -1,14 +1,19 @@
 
 
+import sys
+import os
 import s3fs
-from utlis.constants import logger, AWS_ACCESS_KEY, AWS_SECRET_ACCESS_KEY, AWS_REGION
+
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+from utils.constants import logger, AWS_ACCESS_KEY, AWS_SECRET_ACCESS_KEY, AWS_REGION
 
 
 class BucketOperation:  
     
-    def connect_to_s3(self):
+    def connect_to_s3(self) -> bool:
+        s3_connection = True 
         try:
-            s3 = s3fs.S3FileSystem(
+            s3_connection = s3fs.S3FileSystem(
                 anon=False,
                 key=AWS_ACCESS_KEY,
                 secret=AWS_SECRET_ACCESS_KEY,
@@ -16,10 +21,12 @@ class BucketOperation:
                     'region': AWS_REGION
                 }
             )
-            return s3
+            
         except Exception as e:
+            s3_connection = False
             logger.error("Error while connecting to S3: {0}".format(e))
 
+        return s3_connection
 
     def create_bucket(s3: s3fs.S3FileSystem, bucket_name: str):
         try:
