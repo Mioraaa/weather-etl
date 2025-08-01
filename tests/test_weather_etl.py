@@ -6,11 +6,11 @@ import pytest
 import s3fs
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-from etls.weather_etl import BucketOperation
+from tasks.weather_etl import BucketOperation
 from utils.constants import AWS_ACCESS_KEY, AWS_SECRET_ACCESS_KEY, AWS_REGION
     
-def test_connect_to_s3_success(mocker):
-    mock_s3 = mocker.patch('etls.weather_etl.s3fs.S3FileSystem')
+def test_connect_to_s3(mocker):
+    mock_s3 = mocker.patch('tasks.weather_etl.s3fs.S3FileSystem')
     mock_instance = mock_s3.return_value
 
     bucket = BucketOperation()
@@ -25,3 +25,22 @@ def test_connect_to_s3_success(mocker):
         }
     )
     assert result == mock_instance
+
+def test_create_bucket(mocker):
+    mock_s3 = mocker.patch('tasks.weather_etl.s3fs.S3FileSystem')
+    mock_instance = mock_s3.return_value
+    bucket_name = "test-bucket"
+
+    mock_instance.exists.return_value = False
+
+    bucket = BucketOperation()
+    result = bucket.create_bucket(mock_instance, bucket_name)
+
+    mock_instance.mkdir.assert_called_once_with(bucket_name)
+    assert result is True
+
+    mock_instance.exists.return_value = True
+    result = bucket.create_bucket(mock_instance, bucket_name)
+
+    mock_instance.mkdir.assert_called_once()
+    assert result is True

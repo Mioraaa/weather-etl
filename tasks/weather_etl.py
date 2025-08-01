@@ -28,7 +28,8 @@ class BucketOperation:
 
         return s3_connection
 
-    def create_bucket(s3: s3fs.S3FileSystem, bucket_name: str):
+    def create_bucket(self, s3: s3fs.S3FileSystem, bucket_name: str):
+        bucket_created = True
         try:
             if not s3.exists(bucket_name):
                 s3.mkdir(bucket_name)
@@ -36,4 +37,6 @@ class BucketOperation:
             else:
                 logger.warning(f"bucket {bucket_name} already exists.")
         except Exception as e:
+            bucket_created = False
             logger.error("Error while creating bucket {0}".format(e))
+        return bucket_created
