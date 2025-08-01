@@ -5,6 +5,8 @@ import os
 import s3fs
 import requests
 import json
+import glob
+from datetime import datetime
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from utils.constants import logger, AWS_ACCESS_KEY, AWS_SECRET_ACCESS_KEY, AWS_REGION,\
@@ -73,10 +75,13 @@ class BucketOperation:
         return data_fetched
 
 
-    def upload_data_into_bucket(self, file_path: str, bucket_name: str, s3: s3fs.S3FileSystem) -> bool:
+    def upload_data_into_bucket(self, source_path: str, bucket_name: str, s3: s3fs.S3FileSystem) -> bool:
         data_uploaded = True
         try:
-            s3.put(file_path, f"{bucket_name}/{os.path.basename(file_path)}")
+            file_path = glob.glob(source_path + "*.json")
+            for i in file_path:
+                new_file_name = os.rename(i, f"{i}_{datetime.now().strftime('%Y%m%d_%H%M%S')}.json")
+                s3.put(f"{new_file_name}", f"{bucket_name}/{os.path.basename(new_file_name)}")
             logger.info(f"Data uploaded to bucket {bucket_name} successfully.")
         except Exception as e:
             data_uploaded = False
