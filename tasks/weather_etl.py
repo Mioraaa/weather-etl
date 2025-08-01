@@ -48,6 +48,7 @@ class BucketOperation:
 
 
     def fetch_raw_data_region_weather(self):
+        data_fetched = True
         api_key = API_KEY
         base_url = BASE_URL
         regions = API_REGIONS
@@ -62,10 +63,14 @@ class BucketOperation:
                     with open(file_path, "w") as f:
                         json.dump(response.json(), f, indent=2)
                     logger.info(f"Data Saved in: {region}")
+                    data_fetched = False
                 else:
                     logger.error(f"Failed while fetching data: {region} — Status {response.status_code}")
+                    data_fetched = False
             except Exception as e:
+                data_fetched = False
                 logger.error(f"Error: {region} — {e}")
+        return data_fetched
 
 
     def upload_data_into_bucket(self, file_path: str, bucket_name: str, s3: s3fs.S3FileSystem) -> bool:
