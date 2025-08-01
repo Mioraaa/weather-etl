@@ -21,4 +21,9 @@ AWS_BUCKET_NAME = conf.get("aws", "aws_bucket_name")
 # API configuration
 API_KEY = conf.get("api", "api_key")
 API_URL = conf.get("api", "api_url")
+BASE_URL = conf.get("api", "base_url")
 API_REGIONS = conf.get("api", "api_regions").split(", ")
+
+# Data configuration
+OUTPUT_DIR = conf.get("data", "output_dir")
+INPUT_DIR = conf.get("data", "input_dir")
