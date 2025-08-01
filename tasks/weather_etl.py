@@ -78,9 +78,10 @@ class BucketOperation:
     def upload_data_into_bucket(self, source_path: str, bucket_name: str, s3: s3fs.S3FileSystem) -> bool:
         data_uploaded = True
         try:
-            file_path = glob.glob(source_path + "*.json")
-            for i in file_path:
-                new_file_name = os.rename(i, f"{i}_{datetime.now().strftime('%Y%m%d_%H%M%S')}.json")
+            file_paths = glob.glob(os.path.join(source_path, "*.json"))
+            for i in file_paths:
+                new_file_name = f"{i.rstrip('.json')}_{datetime.now().strftime('%Y%m%d_%H%M%S')}.json"
+                os.rename(i, new_file_name)
                 s3.put(f"{new_file_name}", f"{bucket_name}/{os.path.basename(new_file_name)}")
             logger.info(f"Data uploaded to bucket {bucket_name} successfully.")
         except Exception as e:
