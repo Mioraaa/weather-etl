@@ -50,7 +50,7 @@ This pipeline illustrates the complete lifecycle of ingesting data from **open w
    ```
 
 6. **Access the Airflow UI**
-   Open your browser and go to: [http://localhost:8080](http://localhost:8080)
+   Open your browser and go to: [http://localhost:8081](http://localhost:8081)
 
 7. **Trigger the DAG** to run the full ETL process.
 
