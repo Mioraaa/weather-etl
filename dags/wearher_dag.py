@@ -15,9 +15,6 @@ default_args = {
     "start_date": datetime(2025, 1, 7),
 }
 
-file_postfix = datetime.now().strftime("%Y%m%d")
-
-
 
 @task(task_id="connect_to_s3")
 def connect_to_s3():
