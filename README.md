@@ -1,4 +1,4 @@
-# Weather ETL Pipeline: From Open Weanther API to Redshift via Airflow, S3, and Glue
+# Weather ETL Pipeline: From Visualcrossing API to Redshift via Airflow, S3, and Glue
 
 A complete data pipeline to **Extract**, **Transform**, and **Load** (ETL) Weather data into an AWS Redshift data warehouse using modern cloud and orchestration tools.
 
@@ -18,7 +18,7 @@ This pipeline illustrates the complete lifecycle of ingesting data from **open w
 ##  2. <a name='StackTechnologies'></a>⚙️ Stack & Technologies
 
 **Tools:** Docker, Airflow, AWS S3, AWS Glue, AWS Redshift
-**Libraries/Tech:** `praw`, `pandas`, `numpy`, `s3fs`, `pytest`, `logging`
+**Libraries/Tech:** `pandas`, `numpy`, `s3fs`, `pytest`, `logging`
 
 ---
 
