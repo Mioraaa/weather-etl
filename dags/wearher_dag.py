@@ -19,22 +19,22 @@ file_postfix = datetime.now().strftime("%Y%m%d")
 
 
 
-@task(identifier="connect_to_s3")
+@task(task_id="connect_to_s3")
 def connect_to_s3():
     weather_pipeline = WeatherPipeline()
     return weather_pipeline.run_connect_s3()
 
-@task(identifier="create_bucket")
+@task(task_id="create_bucket")
 def create_bucket():
     weather_pipeline = WeatherPipeline()
     return weather_pipeline.run_create_bucket()
 
-@task(identifier="fetch_raw_data_region_weather")
+@task(task_id="fetch_raw_data_region_weather")
 def fetch_raw_data_region_weather():
     weather_pipeline = WeatherPipeline()
     return weather_pipeline.run_fetch_raw_data_region_weather()
 
-@task(identifier="upload_data_into_bucket")
+@task(task_id="upload_data_into_bucket")
 def upload_data_into_bucket():
     weather_pipeline = WeatherPipeline()
     return weather_pipeline.run_upload_data_into_bucket()
@@ -42,7 +42,7 @@ def upload_data_into_bucket():
 with DAG(
     dag_id="weather_dag",
     default_args=default_args,
-    schedule_interval="@daily",
+    schedule="@daily",
     catchup=False,
 ) as dag:
     connect_to_s3_task = connect_to_s3()

@@ -23,7 +23,7 @@ class BucketOperation:
                 key=AWS_ACCESS_KEY,
                 secret=AWS_SECRET_ACCESS_KEY,
                 client_kwargs={
-                    'region': AWS_REGION
+                    'region_name': AWS_REGION
                 }
             )
             
@@ -55,7 +55,8 @@ class BucketOperation:
         base_url = BASE_URL
         regions = API_REGIONS
         output_dir = OUTPUT_DIR
-
+        os.makedirs(output_dir, exist_ok=True)
+        
         for region in regions:
             url = f"{base_url}/{region}?unitGroup=metric&key={api_key}&include=days"
             try:

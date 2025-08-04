@@ -1,11 +1,9 @@
-FROM apache/airflow:2.0.2
+FROM apache/airflow:3.0.3
 
 COPY requirements.txt /opt/airflow/requirements.txt
 
 USER root
-
 RUN apt-get update && apt-get install -y gcc python3-dev
 
 USER airflow
-
-RUN pip insttall --no-cache-dir -r /opt/airflow/requirements.txt
+RUN pip install --no-cache-dir -r /opt/airflow/requirements.txt
