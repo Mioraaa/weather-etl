@@ -10,7 +10,7 @@ from datetime import datetime
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from utils.constants import logger, AWS_ACCESS_KEY, AWS_SECRET_ACCESS_KEY, AWS_REGION,\
-    API_KEY, API_REGIONS, BASE_URL, OUTPUT_DIR
+    API_KEY, API_REGIONS, BASE_URL, INPUT_DIR
 
 
 class BucketOperation:  
@@ -54,15 +54,15 @@ class BucketOperation:
         api_key = API_KEY
         base_url = BASE_URL
         regions = API_REGIONS
-        output_dir = OUTPUT_DIR
-        os.makedirs(output_dir, exist_ok=True)
-        
+        input_dir = INPUT_DIR
+        os.makedirs(input_dir, exist_ok=True)
+
         for region in regions:
             url = f"{base_url}/{region}?unitGroup=metric&key={api_key}&include=days"
             try:
                 response = requests.get(url)
                 if response.status_code == 200:
-                    file_path = os.path.join(output_dir, f"{region.replace(' ', '_')}.json")
+                    file_path = os.path.join(input_dir, f"{region.replace(' ', '_')}.json")
                     with open(file_path, "w") as f:
                         json.dump(response.json(), f, indent=2)
                     logger.info(f"Data Saved in: {region}")
@@ -74,6 +74,26 @@ class BucketOperation:
                 data_fetched = False
                 logger.error(f"Error: {region} — {e}")
         return data_fetched
+
+
+    def concatenate_data(self, file_list: list):
+        is_concatenated = True
+        output_file = os.path.join(INPUT_DIR, f"regions_{datetime.now().strftime('%Y%m%d_%H%M')}.json")
+        combined_data = []
+        try:
+            for file_path in file_list:
+                with open(file_path, 'r') as infile:
+                    data = json.load(infile)
+                    combined_data.append(data)
+                os.remove(file_path)
+                logger.info(f"File {file_path} is removed successfully.")
+            
+            with open(output_file, "w") as outfile:
+                json.dump(combined_data, outfile, indent=2)
+            logger.info(f"File are concatenate successfuly and saved to {output_file}")
+
+        except Exception as e:
+            logger.error(f"Error while concatenating data: {e}")
 
 
     def upload_data_into_bucket(self, source_path: str, bucket_name: str, s3: s3fs.S3FileSystem) -> bool:
