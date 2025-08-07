@@ -93,7 +93,9 @@ class BucketOperation:
             logger.info(f"File are concatenate successfuly and saved to {output_file}")
 
         except Exception as e:
+            is_concatenated = False
             logger.error(f"Error while concatenating data: {e}")
+        return is_concatenated
 
 
     def upload_data_into_bucket(self, source_path: str, bucket_name: str, s3: s3fs.S3FileSystem) -> bool:
