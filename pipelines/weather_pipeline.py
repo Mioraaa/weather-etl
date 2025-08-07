@@ -2,11 +2,11 @@
 
 import sys
 import os
+import glob
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from tasks.weather_etl import BucketOperation
-from utils.constants import logger, AWS_ACCESS_KEY, AWS_SECRET_ACCESS_KEY,AWS_BUCKET_NAME,\
-      AWS_REGION, OUTPUT_DIR
+from utils.constants import logger, AWS_BUCKET_NAME, INPUT_DIR
 
 class WeatherPipeline:
     
@@ -32,10 +32,17 @@ class WeatherPipeline:
             logger.error("Failed to fetch raw data for region weather.")
             return False
         return True
+    
+    def run_concatenate_data(self):
+        file_list = glob.glob(os.path.join(INPUT_DIR, "*.json"))
+        if not self.bucket_operation.concatenate_data(file_list):
+            logger.error("Failed to concatenate data.")
+            return False
+        return True
 
     def run_upload_data_into_bucket(self):
         s3 = self.bucket_operation.connect_to_s3()
-        if not self.bucket_operation.upload_data_into_bucket(OUTPUT_DIR, AWS_BUCKET_NAME, s3):
+        if not self.bucket_operation.upload_data_into_bucket(INPUT_DIR, AWS_BUCKET_NAME, s3):
             logger.error("Failed to upload data into bucket.")
             return False
         return True

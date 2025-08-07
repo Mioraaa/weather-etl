@@ -11,7 +11,7 @@ A complete data pipeline to **Extract**, **Transform**, and **Load** (ETL) Weath
 
 ##  1. <a name='ProjectOverview'></a>🔍 Project Overview
 
-This pipeline illustrates the complete lifecycle of ingesting data from **open weather** and preparing it for advanced analysis and visualization in a **cloud-based data warehouse**.
+This pipeline illustrates the complete lifecycle of ingesting weather data from **VisualCrossing** and preparing it for advanced analysis and visualization in a **cloud-based data warehouse**.
 
 ---
 
