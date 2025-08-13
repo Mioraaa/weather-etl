@@ -42,7 +42,7 @@ class WeatherPipeline:
 
     def run_upload_data_into_bucket(self):
         s3 = self.bucket_operation.connect_to_s3()
-        if not self.bucket_operation.upload_data_into_bucket(INPUT_DIR, AWS_BUCKET_NAME, s3):
+        if not self.bucket_operation.upload_data_into_bucket(INPUT_DIR, AWS_BUCKET_NAME_INPUT, s3):
             logger.error("Failed to upload data into bucket.")
             return False
         return True
