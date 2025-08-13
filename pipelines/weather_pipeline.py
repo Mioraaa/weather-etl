@@ -6,7 +6,7 @@ import glob
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from tasks.weather_etl import BucketOperation
-from utils.constants import logger, AWS_BUCKET_NAME, INPUT_DIR
+from utils.constants import logger, AWS_BUCKET_NAME_INPUT, INPUT_DIR
 
 class WeatherPipeline:
     
@@ -22,7 +22,7 @@ class WeatherPipeline:
 
     def run_create_bucket(self):
         s3 = self.bucket_operation.connect_to_s3()
-        if not self.bucket_operation.create_bucket(s3, AWS_BUCKET_NAME):
+        if not self.bucket_operation.create_bucket(s3, AWS_BUCKET_NAME_INPUT):
             logger.error("Failed to create s3 bucket.")
             return False
         return True
