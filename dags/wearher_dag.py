@@ -4,7 +4,7 @@ import os, sys
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from airflow import DAG # type:ignore
+from airflow import DAG
 from airflow.decorators import task
 from datetime import datetime
 from pipelines.weather_pipeline import WeatherPipeline
