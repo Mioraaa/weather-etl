@@ -66,10 +66,8 @@ class BucketOperation:
                     with open(file_path, "w") as f:
                         json.dump(response.json(), f, indent=2)
                     logger.info(f"Data Saved in: {region}")
-                    data_fetched = False
                 else:
                     logger.error(f"Failed while fetching data: {region} — Status {response.status_code}")
-                    data_fetched = False
             except Exception as e:
                 data_fetched = False
                 logger.error(f"Error: {region} — {e}")
@@ -78,7 +76,7 @@ class BucketOperation:
 
     def concatenate_data(self, file_list: list):
         is_concatenated = True
-        output_file = os.path.join(INPUT_DIR, f"regions_{datetime.now().strftime('%Y%m%d_%H%M')}.json")
+        output_file = os.path.join(INPUT_DIR, f"regions_{datetime.now().strftime('%Y%M%d')}.json")
         combined_data = []
         try:
             for file_path in file_list:
