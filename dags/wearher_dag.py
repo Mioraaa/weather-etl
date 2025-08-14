@@ -8,6 +8,7 @@ from airflow import DAG
 from airflow.decorators import task
 from datetime import datetime
 from pipelines.weather_pipeline import WeatherPipeline
+from pipelines.aws_pipeline import AwsPipeline
 
 default_args = {
     "owner": "miora",
@@ -40,6 +41,15 @@ def upload_data_into_bucket():
     weather_pipeline = WeatherPipeline()
     return weather_pipeline.run_upload_data_into_bucket()
 
+@task(task_id="aws_create_bucket")
+def aws_create_bucket():
+    aws_pipeline = AwsPipeline()
+    return aws_pipeline.run_create_bucket()
+
+@task(task_id="aws_load_data_into_bucket")
+def aws_load_data_into_bucket():
+    aws_pipeline = AwsPipeline()
+    return aws_pipeline.run_load_data_into_bucket()
 with DAG(
     dag_id="weather_dag",
     default_args=default_args,
@@ -51,6 +61,10 @@ with DAG(
     fetch_raw_data_region_weather_task = fetch_raw_data_region_weather()
     concatenate_data_task = concatenate_data()
     upload_data_into_bucket_task = upload_data_into_bucket()
+    aws_create_bucket_task = aws_create_bucket()
+    aws_load_data_into_bucket_task = aws_load_data_into_bucket()
 
 # Run order tasks
-connect_to_s3_task >> create_bucket_task >> fetch_raw_data_region_weather_task >> concatenate_data_task >> upload_data_into_bucket_task
+connect_to_s3_task >> create_bucket_task >> fetch_raw_data_region_weather_task
+fetch_raw_data_region_weather_task >> concatenate_data_task >> upload_data_into_bucket_task
+upload_data_into_bucket_task >> aws_create_bucket_task >> aws_load_data_into_bucket_task

@@ -24,6 +24,6 @@ class AwsPipeline:
     def run_load_data_into_bucket(self):
         s3 = self.bucket_operation.connect_to_s3()
         if not self.bucket_operation.upload_data_into_bucket(OUTPUT_DIR, AWS_BUCKET_NAME_OUPUT, s3):
-            logger.error("Failed to upload data into bucket.")
+            logger.error("Failed to load data into bucket.")
             return False
         return True
