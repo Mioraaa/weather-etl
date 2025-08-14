@@ -6,12 +6,14 @@ import glob
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from tasks.weather_etl import BucketOperation
+from tasks.aws_etl import AnalysisData
 from utils.constants import logger, AWS_BUCKET_NAME_OUPUT, OUTPUT_DIR
 
 class AwsPipeline:
     
     def __init__(self):
         self.bucket_operation = BucketOperation()
+        self.analysis_data = AnalysisData()
 
    
     def run_create_bucket(self):
@@ -21,9 +23,4 @@ class AwsPipeline:
             return False
         return True
     
-    def run_load_data_into_bucket(self):
-        s3 = self.bucket_operation.connect_to_s3()
-        if not self.bucket_operation.upload_data_into_bucket(OUTPUT_DIR, AWS_BUCKET_NAME_OUPUT, s3):
-            logger.error("Failed to load data into bucket.")
-            return False
-        return True
+   

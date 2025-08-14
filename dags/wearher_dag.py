@@ -50,6 +50,7 @@ def aws_create_bucket():
 def aws_load_data_into_bucket():
     aws_pipeline = AwsPipeline()
     return aws_pipeline.run_load_data_into_bucket()
+
 with DAG(
     dag_id="weather_dag",
     default_args=default_args,
