@@ -76,7 +76,8 @@ class BucketOperation:
 
     def concatenate_data(self, file_list: list):
         is_concatenated = True
-        output_file = os.path.join(INPUT_DIR, f"regions_{datetime.now().strftime('%Y%M%d')}.json")
+        new_file_name =  f"regions_{datetime.now().strftime('%Y%m%d')}.json"
+        output_file = os.path.join(INPUT_DIR, new_file_name)
         combined_data = []
         try:
             for file_path in file_list:
@@ -87,7 +88,7 @@ class BucketOperation:
                 logger.info(f"File {file_path} is removed successfully.")
             
             with open(output_file, "w") as outfile:
-                json.dump(combined_data, outfile, indent=2)
+                json.dump(combined_data, outfile, indent=4)
             logger.info(f"File are concatenate successfuly and saved to {output_file}")
 
         except Exception as e:
@@ -101,9 +102,9 @@ class BucketOperation:
         try:
             file_paths = glob.glob(os.path.join(source_path, "*.json"))
             for i in file_paths:
-                new_file_name = f"{i.rstrip('.json')}_{datetime.now().strftime('%Y%m%d_%H%M%S')}.json"
-                os.rename(i, new_file_name)
-                s3.put(f"{new_file_name}", f"{bucket_name}/{os.path.basename(new_file_name)}")
+                # new_file_name = f"{i.rstrip('.json')}_{datetime.now().strftime('%Y%m%d_%H%M%S')}.json"
+                # os.rename(i, new_file_name)
+                s3.put(f"{i}", f"{bucket_name}/{os.path.basename(i)}")
             logger.info(f"Data uploaded to bucket {bucket_name} successfully.")
         except Exception as e:
             data_uploaded = False
