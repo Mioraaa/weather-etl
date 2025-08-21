@@ -6,6 +6,7 @@ from awsglue.job import Job
 from pyspark.context import SparkContext
 from pyspark.sql.functions import col, explode
 from datetime import datetime
+from utils.constants import AWS_BUCKET_NAME_INPUT, AWS_BUCKET_NAME_OUTPUT
 
 args = getResolvedOptions(sys.argv, ['JOB_NAME'])
 sc = SparkContext.getOrCreate()
@@ -13,10 +14,6 @@ glueContext = GlueContext(sc)
 spark = glueContext.spark_session
 job = Job(glueContext)
 job.init(args['JOB_NAME'], args)
-
-AWS_BUCKET_NAME_INPUT = "weather-etl-madagascar/regions/data-input/"
-AWS_BUCKET_NAME_OUTPUT = "weather-etl-madagascar/regions/data-output/"
-
 s3 = boto3.resource('s3')
 bucket_name_output = AWS_BUCKET_NAME_OUTPUT.split("/")[0]
 bucket_output = s3.Bucket(bucket_name_output)

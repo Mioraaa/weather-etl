@@ -17,7 +17,7 @@ AWS_ACCESS_KEY = conf.get("aws", "aws_access_key")
 AWS_SECRET_ACCESS_KEY = conf.get("aws", "aws_secret_key")
 AWS_REGION = conf.get("aws", "aws_region")
 AWS_BUCKET_NAME_INPUT = conf.get("aws", "aws_bucket_name_input")
-AWS_BUCKET_NAME_OUPUT = conf.get("aws", "aws_bucket_name_output")
+AWS_BUCKET_NAME_OUTPUT = conf.get("aws", "aws_bucket_name_output")
 
 # API configuration
 API_KEY = conf.get("api", "api_key")
