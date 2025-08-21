@@ -1,0 +1,5 @@
+{
+    "owner": "miora",
+    "dag_id": "weather_etl",
+    "schedule": "@daily"
+}

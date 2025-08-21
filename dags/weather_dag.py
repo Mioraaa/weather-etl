@@ -5,12 +5,13 @@ import os, sys
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from airflow import DAG
+from airflow.models import Variable
 from airflow.decorators import task
 from datetime import datetime
 from pipelines.weather_pipeline import WeatherPipeline
 
 default_args = {
-    "owner": "miora",
+    "owner": Variable.get("owner"),
     "start_date": datetime(2025, 1, 7),
 }
 
@@ -43,9 +44,9 @@ def upload_data_into_bucket():
 
 
 with DAG(
-    dag_id="weather_dag",
+    dag_id=Variable.get("dag_id"),
     default_args=default_args,
-    schedule="@daily",
+    schedule=Variable.get("shedule"),
     catchup=False,
 ) as dag:
     connect_to_s3_task = connect_to_s3()
