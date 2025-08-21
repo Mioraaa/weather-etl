@@ -7,7 +7,6 @@ A complete data pipeline to **Extract**, **Transform**, and **Load** (ETL) Weath
 * [🔍 Project Overview](#ProjectOverview)
 * [⚙️ Stack & Technologies](#StackTechnologies)
 * [🚀 Quick Start](#QuickStart)
-* [📘 What I Learned](#WhatILearned)
 
 ##  1. <a name='ProjectOverview'></a>🔍 Project Overview
 
@@ -18,14 +17,14 @@ This pipeline illustrates the complete lifecycle of ingesting weather data from 
 ##  2. <a name='StackTechnologies'></a>⚙️ Stack & Technologies
 
 **Tools:** Docker, Airflow, AWS S3, AWS Glue, AWS Redshift
-**Libraries/Tech:** `pandas`, `numpy`, `s3fs`, `pytest`, `logging`
+**Libraries/Tech:** `pyspark`, `s3fs`, `pytest`, `logging`
 
 ---
 
 ##  3. <a name='PipelineSteps'></a>🛠️ Pipeline Steps
 
-1. **Scrape** data from Open weather using the `praw` API.
-2. **Transform** the data with `pandas`.
+1. **Scrape** data from VisualCrossing
+2. **Transform** the data with `pyspark`.
 3. **Push** the raw data to AWS S3 using `s3fs`.
 4. **Automate** steps 1–3 using **Airflow DAGs**.
 5. **Run Spark-based ETL jobs** using **AWS Glue**.
