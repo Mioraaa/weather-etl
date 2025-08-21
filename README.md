@@ -18,7 +18,7 @@ This pipeline illustrates the complete lifecycle of ingesting weather data from 
 ##  2. <a name='StackTechnologies'></a>⚙️ Stack & Technologies
 
 **Tools:** Docker, Airflow, AWS S3, AWS Glue, AWS Redshift
-**Libraries/Tech:** `pandas`, `numpy`, `s3fs`, `pytest`, `logging`
+**Libraries/Tech:** `pyspark`, `s3fs`, `pytest`, `logging`
 
 ---
 
