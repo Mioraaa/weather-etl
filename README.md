@@ -23,7 +23,7 @@ This pipeline illustrates the complete lifecycle of ingesting weather data from 
 
 ##  3. <a name='PipelineSteps'></a>🛠️ Pipeline Steps
 
-1. **Scrape** data from VisualCrossing using the `praw` API.
+1. **Scrape** data from VisualCrossing
 2. **Transform** the data with `pyspark`.
 3. **Push** the raw data to AWS S3 using `s3fs`.
 4. **Automate** steps 1–3 using **Airflow DAGs**.
