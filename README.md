@@ -7,7 +7,6 @@ A complete data pipeline to **Extract**, **Transform**, and **Load** (ETL) Weath
 * [🔍 Project Overview](#ProjectOverview)
 * [⚙️ Stack & Technologies](#StackTechnologies)
 * [🚀 Quick Start](#QuickStart)
-* [📘 What I Learned](#WhatILearned)
 
 ##  1. <a name='ProjectOverview'></a>🔍 Project Overview
 
