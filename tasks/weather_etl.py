@@ -81,6 +81,8 @@ class BucketOperation:
         combined_data = []
         try:
             for file_path in file_list:
+                if glob.fnmatch.fnmatch(os.path.basename(file_path), 'regions_*.json'):
+                    continue
                 with open(file_path, 'r') as infile:
                     data = json.load(infile)
                     combined_data.append(data)
@@ -102,8 +104,6 @@ class BucketOperation:
         try:
             file_paths = glob.glob(os.path.join(source_path, "*.json"))
             for i in file_paths:
-                # new_file_name = f"{i.rstrip('.json')}_{datetime.now().strftime('%Y%m%d_%H%M%S')}.json"
-                # os.rename(i, new_file_name)
                 s3.put(f"{i}", f"{bucket_name}/{os.path.basename(i)}")
             logger.info(f"Data uploaded to bucket {bucket_name} successfully.")
         except Exception as e:

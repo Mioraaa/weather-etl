@@ -46,7 +46,7 @@ def upload_data_into_bucket():
 with DAG(
     dag_id=Variable.get("dag_id"),
     default_args=default_args,
-    schedule=Variable.get("shedule"),
+    schedule=Variable.get("schedule"),
     catchup=False,
 ) as dag:
     connect_to_s3_task = connect_to_s3()
